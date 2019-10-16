@@ -1,0 +1,2 @@
+To complete the user acceptance tests save a file named ProofOfConcept.sh containing the code and a file named stopwords.txt containing a list of stopwords in a folder. Open terminal to the folder where these files are saved and complete tests.
+Alternatively follow this link https://repl.it/@GeorgiaRutherfo/ProofOfConcept and complete tests in the virtual environment.
