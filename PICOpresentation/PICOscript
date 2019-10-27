@@ -1,0 +1,8 @@
+|| Greeting
+|| Introduce myself
+
+As technology changes, the nature of research changes along with it. Nowadays lots of research and collaboration is done online. Hypothes.is is a tool allows a user to make annotations directly onto a web page. The user can see how their annotations fit into the context of the document as a whole, and is able to share these annotations with others, who can then make further notes within the context of the document. 
+
+However, this technology is not without faults. At this stage hypothes.is does not allow for users to locally backup their annotations. This is an important feature for multiple reasons. First, local back ups secure the annotations of the users in case something were to happen to hypothes.is or to the websites the user is making annotations on. Second, local back ups of annotations would allow users whose research spans across different mediums, such as books or visual media in addition to online sources, to keep their notes in one place. And finally, local back ups in text format would allow for some automatic textual analysis.
+
+This is where my Proof of Concept comes in. Throughout the semester I have developed a shell script that allows users of hypothes.is to make local back ups of their notes. This script even performs some basic textual analysis on the notes, displaying the top 10 most common words used throughout the notes to give the user a brief overview of them. 
