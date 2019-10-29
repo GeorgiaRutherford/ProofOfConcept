@@ -1,0 +1,379 @@
+%From https://egu2018.eu/PICO_how-to_guide_to_PICO.pdf
+%Abstracted and templated by Brian Ballsun-Stanton, Macquarie University.
+%original template by https://github.com/snowtechblog/pico-latex-presentation by Anselm Köhler
+
+\documentclass[unknownkeysallowed,usepdftitle=false, parskip=full]{beamer}
+% unknownkeysallowed is needed for mac and the newer latex version -> is more picky than before...
+\usetheme[headheight=1cm,footheight=2cm]{boxes}
+%\usetheme{default}
+
+
+\usepackage{default}
+\usepackage{graphicx}
+%example pictures created via: http://lorempixel.com/1200/800/cats/Figure2/. Credit to http://lorempixel.com/images.php
+
+\usepackage{epsfig}
+\usepackage{siunitx}
+\usepackage{color}
+\usepackage{ifthen}
+%usepackage{ragged2e}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%https://tex.stackexchange.com/a/203804/5483
+
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype} % http://www.khirevich.com/latex/microtype/
+\microtypecontext{spacing=nonfrench}
+
+\usepackage{lipsum} % for dummy text only
+\usepackage[UKenglish]{babel} %https://tex.stackexchange.com/a/27743 
+\usepackage[pangram]{blindtext} % https://tex.stackexchange.com/a/48411
+
+%\usepackage{parskip} % from https://tex.stackexchange.com/q/11622
+%\setlength{\parskip}{12pt} 
+
+%\setparsizes{\parindent}{12pt}{\parfillskip}
+
+%\usepackage{etoolbox} % as per https://tex.stackexchange.com/a/24331
+%\appto\chapterheadendvskip{\vspace{-1\parskip}}
+%\setparsizes{\parindent}{50pt plus 20pt minus 30pt}{\parfillskip}
+
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+\setbeamersize{text margin left=1cm,text margin right=1cm}
+
+% some colors
+\definecolor{grau}{gray}{.5}
+\definecolor{slfcolor}{rgb}{0,0.6274,0.8353}
+\definecolor{wslcolor}{rgb}{0,0.4,0.4}
+
+% setup links
+\hypersetup{%
+	%linkbordercolor=green,%
+	colorlinks=false,%
+	pdfborderstyle={/S/U/W 0},%
+	%pdfpagemode=FullScreen,%
+	pdfstartpage=4%
+	}
+
+% setup some fonts
+\setbeamerfont{title}{series=\bfseries, size=\small}
+\setbeamerfont{author}{size*={5pt}{0pt}}
+\setbeamerfont{institute}{size*={3pt}{0pt}}
+\setbeamerfont{bodytext}{size=\scriptsize}
+	
+% Title setup	
+\title{Proof Of Concept}
+\author{Georgia Rutherford (\texttt{georgia.rutherford@students.mq.edu.au})}
+\institute{Macquarie University}
+% add title in headbox
+\setbeamertemplate{headline}
+{\leavevmode
+\begin{beamercolorbox}[width=1\paperwidth]{head title}
+  % LOGO
+  \begin{columns}[t, totalwidth=\textwidth]
+  \begin{column}[c]{1.05cm}
+     \includegraphics[width=1cm]{}
+  \end{column}
+  % TITLE
+   \begin{column}[c]{10.6cm}
+   \centering \usebeamerfont{title} \textcolor{slfcolor}{\inserttitle} \\
+   \centering \usebeamerfont{author} \color[rgb]{0,0,0} \insertauthor \\
+   \vspace{-0.05cm}
+   \centering \usebeamerfont{institute} \insertinstitute
+  \end{column}
+  % PICTURE
+  \begin{column}[c]{1.15cm}
+    \hspace{0.005cm}
+    \includegraphics[width=1cm]{}
+  \end{column}
+  \end{columns}
+  {\color{slfcolor}\hrule height 1pt\vspace{0.1cm}}
+\end{beamercolorbox}%
+}
+
+% setup the navigation in footbox
+% first set some button colors
+\newcommand{\buttonactive}{\setbeamercolor{button}{bg=wslcolor,fg=white}}
+\newcommand{\buttonpassive}{\setbeamercolor{button}{bg=slfcolor,fg=black}}
+% now set up that the one active one gets the new color.
+\newcommand{\secvariable}{nothing}
+% therefore we write before each section (well, everything which should be part of the navi bar)
+% the variable \secvariable to any name which is in the next function ...
+\newcommand{\mysection}[1]{\renewcommand{\secvariable}{#1}
+}
+% ... compaired to strings in the following navibar definition ...
+\newcommand{\tocbuttoncolor}[1]{%
+ \ifthenelse{\equal{\secvariable}{#1}}{%
+    \buttonactive}{%
+    \buttonpassive}
+ }
+% ... here we start to set up the navibar. each entry is calling first the function \tocbuttoncolor with the argument which should be tested for beeing active. if active, then change color. afterwards the button is draw. so to change that, you need to change the argument in \toc..color, the first in \hyperlink and before each frames definition... A bit messed up, but works...
+\newlength{\buttonspacingfootline}
+\setlength{\buttonspacingfootline}{-0.2cm}
+\setbeamertemplate{footline}
+{\leavevmode
+\begin{beamercolorbox}[width=1\paperwidth]{head title}
+  {\color{slfcolor}\hrule height 1pt}
+  \vspace{0.05cm}
+  % set up the buttons in an mbox
+  \centering \mbox{
+    \tocbuttoncolor{abstract}
+    \hyperlink{abstract}{\beamerbutton{2 Minute Madness}}
+    \tocbuttoncolor{radar}
+    \hspace{\buttonspacingfootline}
+      \hyperlink{radar}{\beamerbutton{Hypothes.is}}
+
+    \tocbuttoncolor{line}
+    \hspace{\buttonspacingfootline}
+      \hyperlink{line}{\beamerbutton{Proof Of Concept}}
+    \tocbuttoncolor{major}
+    \hspace{\buttonspacingfootline}
+      \hyperlink{major}{\beamerbutton{Significance}}
+    \tocbuttoncolor{slab}
+    \hspace{\buttonspacingfootline}
+      \hyperlink{slab}{\beamerbutton{Usage}}
+    \tocbuttoncolor{minor}
+    \hspace{\buttonspacingfootline}
+      \hyperlink{minor}{\beamerbutton{Code}}
+    \tocbuttoncolor{conclusion}
+    \hspace{\buttonspacingfootline}
+      \hyperlink{conclusion}{\beamerbutton{Conclusion}}
+    % this last one should normaly not be used... it will open the preferences to change the 
+    % behaviour of the acrobat reader in fullscreen -> usefull in pico...
+    \setbeamercolor{button}{bg=white,fg=black}
+    % for presentation
+    %\hspace{-0.1cm}\Acrobatmenu{FullScreenPrefs}{\beamerbutton{\#}}
+    % for upload
+    
+     
+\Acrobatmenu{FullScreenPrefs}{\vspace{0.3cm}\hspace{0.24cm}\mbox{%
+      \includegraphics[height=0.04\textheight,keepaspectratio]{%
+	  figure/CreativeCommons_Attribution_License.eps}%
+	  }}
+   }
+    \vspace{0.05cm}
+\end{beamercolorbox}%
+}
+
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mysection{abstract}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}\label{\secvariable}
+
+\usebeamerfont{bodytext}
+
+
+\parbox{\linewidth}{
+
+Original template: https://github.com/snowtechblog/pico-latex-presentation by Anselm Köhler
+
+
+\vspace{12pt}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet posuere dolor. Morbi at hendrerit justo, congue pulvinar nulla. Donec rhoncus leo fermentum lacus molestie, quis bibendum velit commodo. Nullam vel leo in sem ultricies malesuada. Aenean mauris dui, varius quis nulla eget, facilisis eleifend felis. Etiam arcu ligula, eleifend et augue nec, mollis tristique sem. Mauris lobortis consequat mauris. Quisque quis sollicitudin felis.
+
+ \vspace{12pt}
+ 
+In pellentesque nunc eu risus euismod, id blandit quam hendrerit. Etiam ultrices leo ut lorem posuere tempus. Mauris semper a metus vitae suscipit. Integer malesuada mollis quam ut porta. Integer non ligula tempor, tincidunt nulla ac, aliquam elit. Morbi viverra mi ac mi ullamcorper imperdiet. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque aliquet mattis porta. Nunc non vulputate lorem. Sed ut volutpat neque. Ut ut tellus ac dui dignissim mattis. Suspendisse lacus turpis, finibus et leo at, maximus aliquam nunc. Nulla eget nisi efficitur, egestas eros molestie, pharetra purus. Integer sodales neque sit amet porttitor tempus. Mauris rutrum eget leo a laoreet.
+
+ \vspace{12pt}
+ 
+Praesent dolor nibh, malesuada quis convallis sit amet, volutpat at purus. Suspendisse sed velit quis turpis venenatis fermentum ut sed tellus. Ut eu lacus ultricies, elementum ex gravida, gravida elit. Donec gravida nisl sit amet nulla vestibulum, in malesuada diam varius. Donec sodales efficitur nulla, non tincidunt nibh commodo nec. 
+}
+
+
+   
+\end{frame}
+
+\begin{frame}\label{\secvariable}
+  \begin{columns}[t]
+  %https://tex.stackexchange.com/a/7452/5483
+  \begin{column}[c]{0.44\textwidth}
+%http://lorempixel.com/1200/800/cats/Figure2/     
+%http://lorempixel.com/1200/800/cats/Figure3/
+\includegraphics[width=1.2\textwidth,height=0.5\textheight,keepaspectratio]{%
+figure/hypothesis-example-selfconsciousness.png}\\
+\vspace{12pt}
+\includegraphics[width=1.5\textwidth,height=0.5\textheight,keepaspectratio]{%
+figure/Selfconsciousness-output.png}
+    \end{column}
+    \begin{column}[c]{0.45\textwidth}
+    \parbox{\linewidth}{
+
+      Integer dictum condimentum elit ac placerat. Duis vitae ex nec mauris iaculis maximus. Aliquam est velit, imperdiet placerat velit elementum, fringilla fringilla tortor. Nunc tempus vulputate leo, ac commodo dolor mattis ullamcorper. Donec elementum dapibus justo ut vestibulum. 
+      
+      \vspace{12pt}
+      
+      Phasellus aliquam porta justo, et accumsan libero tristique quis. Aenean vel risus accumsan, feugiat lorem vel, placerat.
+      }
+    \end{column}
+    
+  \end{columns}
+
+  
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mysection{radar}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}\label{\secvariable}
+  \begin{columns}[t]
+  %https://tex.stackexchange.com/a/7452/5483
+    \begin{column}[c]{0.45\textwidth}
+    \parbox{\linewidth}{
+
+\textbf{Hypothes.is}
+
+      \vspace{12pt}
+     
+\begin{itemize}
+\item View web annotations in context
+\item Improve online collaboration
+\end{itemize}
+
+  \vspace{12pt}
+  
+\begin{itemize}
+\item No inbuilt way to locally back up annotations
+\end{itemize}
+
+      }
+    \end{column}
+    \begin{column}[c]{0.6\textwidth}
+%http://lorempixel.com/1200/800/cats/Figure2/     
+%http://lorempixel.com/1200/800/cats/Figure3/
+\includegraphics[width=1\textwidth,height=0.5\textheight,keepaspectratio]{%
+figure/hypothesis-example-selfconsciousness.png}\\
+\vspace{12pt}
+\includegraphics[width=1\textwidth,height=0.5\textheight,keepaspectratio]{%
+figure/Underlined-book.jpg}
+    \end{column}
+  \end{columns}
+
+  
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mysection{line}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}\label{\secvariable}
+\begin{center}
+  \vspace{-0.5cm}
+      \parbox{\linewidth}{\textbf{Proof of Concept}}
+  %http://lorempixel.com/1200/800/cats/Figure4/
+\includegraphics[width=1\textwidth,height=0.75\textheight,keepaspectratio]{%
+  figure/figure4.png}
+\end{center}
+  \vspace{-0.2cm}
+      \parbox{\linewidth}{
+      
+\begin{itemize}
+\item  Downloads annotation information from hypothes.is API
+\item Reformats annotation information so it is human-readable
+\item Performs basic textual analysis on annotation information
+\end{itemize}
+  }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mysection{major}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}\label{\secvariable} %%Eine Folie
+\parbox{\linewidth}{\textbf{Significance}}
+\begin{center}
+%http://lorempixel.com/1200/800/cats/Figure5/
+\includegraphics[width=1\textwidth,height=0.8\textheight,keepaspectratio]{%
+figure/ResearchMan.jpg}
+\end{center}
+
+    \parbox{\linewidth}{
+
+Locally backing up notes improves user security, organisation and allows for additional automatic analysis.
+}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mysection{slab}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}\label{\secvariable}
+%http://lorempixel.com/1200/800/cats/Figure6/
+\begin{center}
+ \parbox{\linewidth}{ \textbf{Usage}}
+\includegraphics[width=1\textwidth,height=0.75\textheight,keepaspectratio]{%
+figure/Execution-example.png}
+\end{center}
+    \parbox{\linewidth}{
+
+To run the code, the user must simply type "bash (url) (filename)" into terminal. The url should be where the user wishes to get annotations from, and the filename should be the desired filename for the end document. \hyperlink{slabtable}{\beamerbutton{more \dots}}
+}
+
+\end{frame}
+
+
+
+\begin{frame}\label{slabtable}
+\begin{columns}
+\begin{column}[t]{1.1\textwidth}
+\hyperlink{slab}{\beamerbutton{\dots back to usage}}\\
+The result of successfully running the code is two files. One is named (filename)-original.txt and displays the annotation information as first given by the hypothes.is API. The other is named (filename).txt and displays the information reformatted with basic analysis.
+
+
+%Table from original template.
+
+\vspace{0.3cm}
+\end{column}
+\end{columns}
+\usebeamerfont{bodytext}
+%
+\includegraphics[width=0.45\textwidth,height=1\textheight,keepaspectratio]{%
+figure/Hegel-output-example.png}\hspace{.05\textwidth}
+\includegraphics[width=0.45\textwidth,height=1\textheight,keepaspectratio]{%
+figure/Hegel-reformat-example.png}
+ 
+\vspace{0.2cm}
+
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mysection{minor}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}\label{\secvariable} %%Eine Folie
+\begin{center}
+%http://lorempixel.com/1200/800/cats/Figure7/
+\includegraphics[width=1\textwidth,height=0.7\textheight,keepaspectratio]{%
+figure/Code1.png}
+\end{center}
+\vspace{-0.2cm}
+
+Example section of code. For full code please see https://github.com/GeorgiaRutherford/ProofOfConcept
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mysection{conclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}\label{\secvariable}
+  
+  \begin{itemize}
+   \item Project Repository: https://github.com/GeorgiaRutherford/ProofOfConcept 
+  \item Slides Template: https://www.overleaf.com/latex/templates/pico-presentation-template/tgjkwvcwjpbf
+  \item Slides Template Original: https://github.com/snowtechblog/pico-latex-presentation by An-selm Köhler
+
+  \end{itemize}
+
+  \usebeamerfont{bodytext}
+ 
+\textit{Thank you!} 
+  
+\end{frame}
+
+
+
+\end{document}
