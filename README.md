@@ -17,6 +17,7 @@ The result of this code will be two files. One will be titled (filename).txt. Th
 # Example Code
 This is an example of the Proof of Concept code. For the code with comments and the stopwords.txt file, please see the code folder of the github repository:  https://github.com/GeorgiaRutherford/ProofOfConcept
 
+'''
 wget https://hypothes.is/api/search?url="$1"
 
 mv search?url* original.txt
@@ -118,3 +119,4 @@ rm output3.txt
 mv original.txt "$2-original.txt"
 
 echo "Task Complete"
+'''
