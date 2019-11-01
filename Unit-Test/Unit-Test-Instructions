@@ -1,0 +1,12 @@
+In the unit-testing folder of this GitHub repository you will find a code that will test the wget command used within the Proof Of Concept code. It is known that this command may not work in some operating environments. Please use this unit testing to determine if the wget command is operational in your operating environment. This test relies on bats-core automated testing system.
+
+To install bats please type the following commands into your terminal:
+$ git clone https://github.com/bats-core/bats-core.git 
+$ cd bats-core 
+$ ./install.sh (desired file location, for example /usr/local)
+
+Next save the wgettest.bats file from this repository.
+
+To run the test please type the following commands into your terminal:
+$ chmod +x wgettest.bats
+$ ./wgettest.bats
