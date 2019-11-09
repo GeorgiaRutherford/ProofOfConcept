@@ -1,1 +1,3 @@
+Known Bugs:
 At this stage the analysis section does not work on the time updated/created
+At this stage the code will only work on annotations made on webpages. Further work is required to get the code to work on annotations made on PDFs. 
